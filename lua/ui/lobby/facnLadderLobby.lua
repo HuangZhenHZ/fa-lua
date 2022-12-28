@@ -1446,7 +1446,7 @@ local function HostUpdateVersion(newPlayerID, newPlayerName)
             local versionnames = GameVersion()
 
             reason = (LOCF('<LOC lobui_0588>\n你版本太低了，' ..
-                               '\n我们现在联机都是\n.%s了，需要更新到最新版本 \n\n下载地址：QQ群542368212 ',
+                               '\n我们现在联机都是\n.%s了，需要更新到最新版本 \n\n下载地址：QQ群659797309 ',
                                versionnames))
             -- TODO: 验证函数
             if FindNameForID(newPlayerID) then

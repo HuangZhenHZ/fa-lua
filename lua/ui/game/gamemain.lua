@@ -266,6 +266,27 @@ function CreateUI(isReplay)
     if options.gui_render_enemy_lifebars == 1 or options.gui_render_custom_names == 0 then
         import('/modules/console_commands.lua').Init()
     end
+	
+	--for area command   --LinLin 221128 FACN
+	import('/lua/Area Commands/areacommands.lua').Init()
+
+    local oldEvent = gameParent.HandleEvent
+    gameParent.HandleEvent = function(self, event)
+        --可以在这里判定
+            
+        if event.Type == 'ButtonPress' and event.Modifiers.Right and event.Modifiers.Ctrl then
+            import('/lua/Area Commands/areacommands.lua').DragFunction()
+        elseif event.Type == 'ButtonPress' and event.Modifiers.Right and event.Modifiers.Ctrl and event.Modifiers.Alt  then
+            import('/lua/Area Commands/areacommands.lua').DragFunction()
+        elseif event.Type == 'ButtonRelease'  and event.Modifiers.Ctrl and event.Modifiers.Alt then
+            import('/lua/Area Commands/areacommands.lua').GiveCommandRebuild()
+        elseif event.Type == 'ButtonRelease'  then
+            import('/lua/Area Commands/areacommands.lua').GiveCommand()
+        end
+            
+        oldEvent(event)
+            
+    end
 
 end
 

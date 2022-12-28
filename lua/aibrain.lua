@@ -40,6 +40,7 @@ local TransferUnitsOwnership = import('/lua/SimUtils.lua').TransferUnitsOwnershi
 local observer = false
 scoreData = {}
 scoreData.current = {}
+DroppedArmy = {}	--For Replacement FACN
 
 scoreInterval = 10
 scoreData.historical = {}
@@ -904,6 +905,70 @@ AIBrain = Class(moho.aibrain_methods) {
             self.Trash:Destroy()
         end
         #LOG('===== AI DEBUG: Brain Evaluate Thead killed =====')
+    end,
+	
+	--Player replacement    --LinLin 221218 FACN
+	OnReplace = function(self)
+	
+		local function SortAllies()
+			local allies = {}
+			local selfIndex = self:GetArmyIndex()
+			-- this part determines who the allies are
+			for index, brain in ArmyBrains do
+                brain.index = index
+                brain.score = brain:CalculateScore()
+                if IsAlly(selfIndex, brain:GetArmyIndex()) and DroppedArmy[brain:GetArmyIndex()] ~= 1 and not brain:IsDefeated() then
+                    table.insert(allies, brain)
+                end
+            end
+			
+			-- This part determines which ally has the highest score and transfers ownership of all units to him
+            if table.getn(allies) > 0 then
+                table.sort(allies, function(a,b) return a.score > b.score end)
+            end
+			
+			return allies
+		end
+		
+	
+        local function ReplaceArmy()
+            local allies = {}
+            local selfIndex = self:GetArmyIndex()
+            WaitSeconds(11)
+			if self:IsDefeated() then
+				return
+			end
+			DroppedArmy[selfIndex] = 1
+			allies = SortAllies()
+			if table.getn(allies) > 0 then
+				SetArmyUnitCap(allies[1].index, GetArmyUnitCap(allies[1].index) + GetArmyUnitCap(selfIndex))
+			end
+			
+			while true do
+				if table.getn(allies) > 0 then
+					local units = self:GetListOfUnits(categories.ALLUNITS - categories.WALL - categories.COMMAND, false)
+					if units and table.getn(units) > 0 then
+						TransferUnitsOwnership(units, allies[1].index)
+					end
+				-- If do not have allies: self destruct
+				else
+					local tokill = self:GetListOfUnits(categories.ALLUNITS - categories.WALL, false)
+					if tokill and table.getn(tokill) > 0 then
+						for index, unit in tokill do
+						unit:Kill()
+						end
+					end
+					return
+				end
+				WaitSeconds(60)
+				allies = {}
+				allies = SortAllies()
+			end
+			
+        end
+		
+        ForkThread(ReplaceArmy)
+		
     end,
 
 
@@ -4209,10 +4274,10 @@ AIBrain = Class(moho.aibrain_methods) {
         end
     end,
 
-
+	
     AbandonedByPlayer = function(self)
         if not IsGameOver() then
-            if ScenarioInfo.Options.AIReplacement == 'On' then
+            if ScenarioInfo.Options.Replacement == 'AI' then
                 ForkThread(function()
                     local oldName = ArmyBrains[self:GetArmyIndex()].Nickname
 
@@ -4239,7 +4304,9 @@ AIBrain = Class(moho.aibrain_methods) {
                     self:InitializeSkirmishSystems()
                     self:OnCreateAI()
                 end)
-            else -- If ScenarioInfo.Options.AIReplacement return nil or any other value, make sure the ACU explodes.
+			elseif ScenarioInfo.Options.Replacement == 'Ally' then
+				self:OnReplace()
+            else -- If ScenarioInfo.Options.Replacement return nil or any other value, make sure the ACU explodes.
                 self:OnDefeat()
             end
         end

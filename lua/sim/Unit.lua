@@ -2811,6 +2811,13 @@ Unit = Class(moho.unit_methods) {
     end,
 
     OnStartBuild = function(self, unitBeingBuilt, order)
+	
+		-- OnStartBuild() is called on paused engineers when they roll up to their next construction
+        -- task. This is a native-code bug: it shouldn't be calling OnStartBuild at all in this case
+        if self:IsPaused() then
+            return
+        end
+	
         if order == 'Repair' then
             if unitBeingBuilt.WorkItem ~= self.WorkItem then
                 self:InheritWork(unitBeingBuilt)

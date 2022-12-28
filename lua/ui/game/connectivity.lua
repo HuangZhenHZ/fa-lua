@@ -77,6 +77,8 @@ function PingUpdate()
 end
     
 function CreateUI()
+	--show networksstats from faf 		--LinLin 221128 FACN
+	ConExecute('ren_shownetworkstats true')
     if not SessionIsMultiplayer() then
         return
     end
@@ -169,6 +171,8 @@ function CloseWindow()
     GameMain.RemoveBeatFunction(PingUpdate)
     GUI.group:Destroy()
     GUI.group = false
+	--show networksstats from faf 		--LinLin 221128 FACN
+	ConExecute('ren_shownetworkstats false')
 end
 
 function CreateBorder(parent)

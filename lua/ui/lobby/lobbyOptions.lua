@@ -102,6 +102,29 @@ teamOptions =
             },
         },
     },
+	{
+        default = 3,
+        label = "<LOC replace_0001>Replacement",
+        help = "<LOC replace_0002>Replace a disconnected player.",
+        key = 'Replacement',
+        values = {
+            {
+                text = "<LOC replace_0006>AI replacement",
+                help = "<LOC replace_0003>If a player disconnects and the ACU is still active, an AI will be created to take control of units that belonged to the player who disconnected.",
+                key = 'AI',
+            },
+			{
+                text = "<LOC replace_0007>Ally replacement",
+                help = "<LOC replace_0004>If a player disconnects and the ACU is still active, he/she will give all units to an ally.",
+                key = 'Ally',
+            },
+            {
+                text = "<LOC _Off>Off",
+                help = "<LOC replace_0005>A disconnected player will cause the destruction of their units based on share conditions.",
+                key = 'Off',
+            },
+        },
+    },
 }
 
 globalOpts = {
@@ -498,24 +521,6 @@ globalOpts = {
                 text = "200%",
                 help = "造价为原数据的200%",
                 key = '2.0',
-            },
-        },
-    },
-	{
-        default = 2,
-        label = "<LOC aireplace_0001>AI Replacement",
-        help = "<LOC aireplace_0002>Toggle AI Replacement if a player disconnects.",
-        key = 'AIReplacement',
-        values = {
-            {
-                text = "<LOC _On>On",
-                help = "<LOC aireplace_0003>If a player disconnects and the ACU is still active, an AI will be created to take control of units that belonged to the player who disconnected.",
-                key = 'On',
-            },
-            {
-                text = "<LOC _Off>Off",
-                help = "<LOC aireplace_0004>A disconnected player will cause the destruction of their units based on share conditions.",
-                key = 'Off',
             },
         },
     },

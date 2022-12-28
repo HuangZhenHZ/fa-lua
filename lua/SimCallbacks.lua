@@ -74,6 +74,17 @@ Callbacks.AIChat = SUtils.FinishAIChat
 
 Callbacks.DiplomacyHandler = import('/lua/SimDiplomacy.lua').DiplomacyHandler
 
+--For area command    --LinLin 221128 FACN
+Callbacks.AreaCommandCallback = import('/lua/Area Commands/areacommands.lua').AreaCommand
+
+Callbacks.AreaCommandRebuildCallback = import('/lua/Area Commands/areacommands.lua').AreaCommandRebuild
+
+Callbacks.DrawRectangle = import('/lua/Area Commands/areacommands.lua').DrawRectangle
+
+Callbacks.ClearBuildArea = import('/lua/Area Commands/areacommands.lua').ClearBuildArea
+
+
+
 --Callbacks.GetUnitHandle = import('/lua/debugai.lua').GetHandle
 
 function Callbacks.OnMovieFinished(name)

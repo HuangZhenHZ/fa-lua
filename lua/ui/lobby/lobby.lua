@@ -2448,7 +2448,7 @@ local function HostUpdateVersion(newPlayerID, newPlayerName)
             local versionnames = GameVersion()
 
             reason = (LOCF('<LOC lobui_0588>\n你版本太低了，' ..
-                               '\n我们现在联机都是\n.%s了，需要更新到最新版本 \n\n下载地址：QQ群542368212 ',
+                               '\n我们现在联机都是\n.%s了，需要更新到最新版本 \n\n下载地址：QQ群659797309 ',
                                versionnames))
             -- TODO: 验证函数
             if FindNameForID(newPlayerID) then
@@ -3407,10 +3407,10 @@ function CreateUI(maxPlayers)
     RuleLabel:DeleteAllItems()
     local tmptext
     if isHost then
-        tmptext = 'FA联机QQ群542368212'
+        tmptext = 'FA联机QQ群659797309'
         RuleLabel:SetColors("FFCC00")
     else
-        tmptext = '新手联机教程、录像、MOD，请加QQ群542368212'
+        tmptext = '新手联机教程、录像、MOD，请加QQ群659797309'
     end
     RuleLabel:SetText(tmptext)
     if isHost then
@@ -5531,9 +5531,9 @@ function SetRuleTitleText(rule)
     if rule == '' then
         if lobbyComm:IsHost() then
             GUI.RuleLabel:SetColors("FFCC00")
-            rule = '新手联机教程、录像、MOD，请加QQ群542368212'
+            rule = '新手联机教程、录像、MOD，请加QQ群659797309'
         else
-            rule = "FA联机QQ群542368212"
+            rule = "FA联机QQ群659797309"
         end
     end
 

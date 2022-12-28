@@ -99,15 +99,9 @@ function CreateUI(parent, showPatch)
     LayoutHelpers.AtLeftIn(GithubButton, dialogContent)
     LayoutHelpers.AtBottomIn(GithubButton, dialogContent, 10)
     GithubButton.OnClick = function()
-        OpenURL('http://fa.mfency.cn:980/replay/index')
+        OpenURL('http://fa.zdtpc.com:980/replay/index')
     end
 	
-	    local UnityDButton = UIUtil.CreateButtonWithDropshadow(dialogContent, '/BUTTON/medium/', "摇号系统")
-    LayoutHelpers.AtLeftIn(UnityDButton, dialogContent,300)
-    LayoutHelpers.AtBottomIn(UnityDButton, dialogContent, 10)
-    UnityDButton.OnClick = function()
-		OpenURL('http://fa.mfency.cn:980/replay/vpn')
-    end
 end
 
 --- Test if we should display the changelog of the new game version.
